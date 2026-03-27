@@ -224,11 +224,13 @@
         const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dbd7v3irn/image/upload';
         const CLOUDINARY_PRESET = 'REGISTRATION';
 
-        // 1. DATE GUARD (PH TIME)
+        // 1. DATE GUARD (PH TIME LOGIC)
         window.addEventListener('load', () => {
-            const openTime = new Date('2026-03-30T12:00:00+08:00').getTime();
+            // March 30, 2026, 12:00 PM Philippine Time (UTC+8)
+            const openingDate = new Date('2026-03-30T12:00:00+08:00').getTime();
             const now = new Date().getTime();
-            if (now < openTime) {
+            
+            if (now < openingDate) {
                 document.getElementById('regContent').style.display = 'none';
                 document.getElementById('upcomingNotice').style.display = 'block';
             }
@@ -280,8 +282,7 @@
                     cloudData.append('file', fileInput.files[0]);
                     cloudData.append('upload_preset', CLOUDINARY_PRESET);
                     const cloudRes = await fetch(CLOUDINARY_URL, { method: 'POST', body: cloudData });
-                    const cloudJson = await cloudRes.json();
-                    imageUrl = cloudJson.secure_url;
+                    imageUrl = (await cloudRes.json()).secure_url;
                 }
 
                 const formData = new FormData(e.target);
