@@ -55,13 +55,13 @@
         </div>
 
         <div id="regContent">
-            <div class="header">
+            <div class="header" style="text-align: center;">
                 <div class="logo-row" style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
                     <img src="ITECH LOGO.png" alt="ITECH" style="height: 50px;">
                     <img src="EDULEARN LOGO.png" alt="EDULEARN" style="height: 50px;">
                 </div>
                 <h2 style="font-weight: 800;">SUMMER WORKSHOP REGISTRATION</h2>
-                <p>iTechlab Innovation and Training Center </p>
+                <p style="color: #64748b; margin-bottom: 30px;">iTECHLAB | Empowering Future Innovators</p>
             </div>
 
             <form id="regForm">
@@ -106,14 +106,15 @@
                         <p class="booking-note">* Required for logistics and group booking.</p>
                     </div>
 
-                    <div class="input-group">
-                        <label>Contact Number</label>
-                        <input type="tel" name="mobile" placeholder="09XXXXXXXXX" required>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Email Address</label>
-                        <input type="email" name="email" required>
+                    <div class="flex-row">
+                        <div class="input-group" style="flex: 1;">
+                            <label>Contact Number</label>
+                            <input type="tel" name="mobile" placeholder="09XXXXXXXXX" required>
+                        </div>
+                        <div class="input-group" style="flex: 1;">
+                            <label>Email Address</label>
+                            <input type="email" name="email" required>
+                        </div>
                     </div>
 
                     <div class="input-group">
@@ -123,7 +124,24 @@
                 </div>
 
                 <div class="form-section">
-                    <div class="section-title">SECTION 2: WORKSHOP SELECTION</div>
+                    <div class="section-title">SECTION 2: INSTITUTION DETAILS</div>
+                    <div class="input-group">
+                        <label>Institution Name</label>
+                        <input type="text" name="institution" placeholder="School or Company Name" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Position</label>
+                        <select name="position" required>
+                            <option value="" disabled selected>Select Position</option>
+                            <option value="Student">Student</option>
+                            <option value="Teacher">Teacher</option>
+                            <option value="School admin">School Admin</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-title">SECTION 3: WORKSHOP SELECTION</div>
                     <div class="input-group">
                         <label>Step 1: Choose Batch Schedule</label>
                         <select id="dateSelect" name="schedule" required>
@@ -135,7 +153,7 @@
                     </div>
 
                     <div class="input-group" id="workshopWrapper" style="display: none;">
-                        <label>Step 2: Workshop Topic</label>
+                        <label>Step 2: Select Workshop Topic</label>
                         <select name="workshop" id="workshopSelect" required>
                             <option value="" disabled selected>Tap to select...</option>
                         </select>
@@ -155,7 +173,7 @@
                 </div>
 
                 <div class="form-section">
-                    <div class="section-title">SECTION 3: PAYMENT</div>
+                    <div class="section-title">SECTION 4: PAYMENT</div>
                     <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
                         <p style="font-weight: 600; font-size: 0.8rem; color: #64748b;">TOTAL AMOUNT TO PAY:</p>
                         <span id="totalAmount" class="amount-badge">₱0.00</span>
@@ -181,7 +199,7 @@
                             <div class="qr-container"><img src="QRCODE.png" alt="GCash" class="qr-code-img"></div>
                         </div>
                         <div id="cashInfo" class="method-info">
-                            <p>Settle at booth on Day 1.</p>
+                            <p>Settle at registration booth on your first day.</p>
                         </div>
                         <div id="onlinePaymentFields" style="display:none; margin-top: 15px;">
                             <div class="input-group">
@@ -208,10 +226,8 @@
 
         // 1. DATE GUARD (PH TIME)
         window.addEventListener('load', () => {
-            // Target: March 30, 2026, 12:00 PM (GMT+8)
-            const openTime = new Date('2026-03-27T12:00:00+08:00').getTime();
+            const openTime = new Date('2026-03-30T12:00:00+08:00').getTime();
             const now = new Date().getTime();
-            
             if (now < openTime) {
                 document.getElementById('regContent').style.display = 'none';
                 document.getElementById('upcomingNotice').style.display = 'block';
@@ -220,9 +236,9 @@
 
         // 2. WORKSHOP LOGIC
         const topics = {
-            'batch1': ["Arduino: Build Your Own Smart World", "Mbot: Robotics Mastery"],
-            'batch2': ["Arduino: Build Your Own Smart World", "Mbot: Robotics Mastery", "Bambu: 3D Printing"],
-            'batch3': ["Arduino: Build Your Own Smart World", "Mbot: Robotics Mastery", "Bambu: 3D Printing", "Drone: Master the Skies"]
+            'batch1': ["Arduino Workshop", "mBot2 Workshop"],
+            'batch2': ["Arduino Workshop", "mBot2 Workshop", "3D Printing Workshop"],
+            'batch3': ["Arduino Workshop", "mBot2 Workshop", "3D Printing Workshop", "Drone Workshop"]
         };
 
         document.getElementById('dateSelect').addEventListener('change', function() {
@@ -235,7 +251,7 @@
             });
         });
 
-        // 3. PRICING & PAYMENT TOGGLES
+        // 3. PRICING & PAYMENT UI
         document.getElementById('daysAvail').addEventListener('change', function() {
             const pricing = { "1": 500, "2": 950, "3": 1400, "4": 1800, "5": 2000 };
             document.getElementById('totalAmount').innerText = `₱${(pricing[this.value] || 0).toLocaleString()}`;
