@@ -224,19 +224,32 @@
         const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dbd7v3irn/image/upload';
         const CLOUDINARY_PRESET = 'REGISTRATION';
 
-        // 1. DATE GUARD (PH TIME LOGIC)
+        // 1. DYNAMIC SCHEDULING & BATCH GUARD
         window.addEventListener('load', () => {
-            // March 30, 2026, 12:00 PM Philippine Time (UTC+8)
-            const openingDate = new Date('2026-03-23T12:00:00+08:00').getTime();
             const now = new Date().getTime();
             
-            if (now < openingDate) {
+            // Opening Dates (PH Time UTC+8)
+            const mainOpening = new Date('2026-03-23T12:00:00+08:00').getTime();
+            const b2Opening   = new Date('2026-04-30T12:00:00+08:00').getTime(); 
+            const b3Opening   = new Date('2026-04-30T12:00:00+08:00').getTime();
+
+            // Main Site Guard
+            if (now < mainOpening) {
                 document.getElementById('regContent').style.display = 'none';
                 document.getElementById('upcomingNotice').style.display = 'block';
+                return;
             }
+
+            // Batch Options Visibility
+            const dateSelect = document.getElementById('dateSelect');
+            const b2Opt = dateSelect.querySelector('option[value="batch2"]');
+            const b3Opt = dateSelect.querySelector('option[value="batch3"]');
+
+            if (now < b2Opening) { b2Opt.style.display = 'none'; b2Opt.disabled = true; }
+            if (now < b3Opening) { b3Opt.style.display = 'none'; b3Opt.disabled = true; }
         });
 
-        // 2. WORKSHOP LOGIC
+        // 2. WORKSHOP TOPICS
         const topics = {
             'batch1': ["Build Your Own Smart World with Arduino UNO R4", "CyberDrive: Robotics Mastery with mBot2"],
             'batch2': ["Build Your Own Smart World with Arduino UNO R4", "CyberDrive: Robotics Mastery with mBot2", "Bring Ideas to Life with Bambu Lab"],
@@ -247,10 +260,14 @@
             const select = document.getElementById('workshopSelect');
             document.getElementById('workshopWrapper').style.display = 'block';
             select.innerHTML = '<option value="" disabled selected>Tap to select...</option>';
-            topics[this.value].forEach(t => {
-                let opt = document.createElement('option'); opt.value = t; opt.textContent = t;
-                select.appendChild(opt);
-            });
+            
+            if (topics[this.value]) {
+                topics[this.value].forEach(t => {
+                    let opt = document.createElement('option');
+                    opt.value = t; opt.textContent = t;
+                    select.appendChild(opt);
+                });
+            }
         });
 
         // 3. PRICING & PAYMENT UI
@@ -296,14 +313,17 @@
 
                 if (result === "Success") {
                     document.getElementById('statusTitle').innerText = "Success!";
-                    document.getElementById('statusMsg').innerText = "Registration complete.";
+                    document.getElementById('statusMsg').innerText = "Registration complete. Please check your email for confirmation.";
+                } else if (result === "DUPLICATE_EMAIL" || result === "DUPLICATE_NAME") {
+                    document.getElementById('statusTitle').innerText = "Already Registered";
+                    document.getElementById('statusMsg').innerText = "This record already exists in our database.";
                 } else {
                     document.getElementById('statusTitle').innerText = "Notice";
                     document.getElementById('statusMsg').innerText = result;
                 }
             } catch (err) {
                 document.getElementById('statusTitle').innerText = "Error";
-                document.getElementById('statusMsg').innerText = "Connection failed.";
+                document.getElementById('statusMsg').innerText = "Connection failed. Please try again.";
             } finally {
                 document.getElementById('closeBtn').style.display = 'block';
             }
