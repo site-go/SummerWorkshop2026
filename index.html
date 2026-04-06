@@ -34,8 +34,34 @@
         }
         .notice-card { display: none; padding: 30px; border-radius: 12px; margin-bottom: 20px; font-weight: 700; text-align: center; border: 2px solid; }
         #upcomingNotice { background: #e0e7ff; color: #3730a3; border-color: #6366f1; }
-        .booking-note { font-size: 0.75rem; color: #64748b; margin-top: 4px; font-style: italic; }
-        .flex-row { display: flex; gap: 15px; }
+        
+        /* Checkbox Styling */
+        .day-selector-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-top: 10px;
+        }
+        .day-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            padding: 10px;
+            border-radius: 8px;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+        .day-option:hover { background: #fff; border-color: #6366f1; }
+        .day-option input { width: 20px; height: 20px; cursor: pointer; accent-color: #6366f1; }
+        .day-desc { color: #64748b; font-weight: 400; display: block; font-size: 0.75rem; }
+        .day-title { font-weight: 700; color: #1e293b; display: block; }
+
         @media (max-width: 480px) { .flex-row { flex-direction: column; gap: 0; } }
     </style>
 </head>
@@ -67,75 +93,36 @@
             <form id="regForm">
                 <div class="form-section">
                     <div class="section-title">SECTION 1: PERSONAL INFORMATION</div>
-                    
                     <div class="flex-row">
-                        <div class="input-group" style="flex: 2;">
-                            <label>First Name</label>
-                            <input type="text" name="firstname" required>
-                        </div>
-                        <div class="input-group" style="flex: 2;">
-                            <label>Last Name</label>
-                            <input type="text" name="lastname" required>
-                        </div>
+                        <div class="input-group" style="flex: 2;"><label>First Name</label><input type="text" name="firstname" required></div>
+                        <div class="input-group" style="flex: 2;"><label>Last Name</label><input type="text" name="lastname" required></div>
                     </div>
-
                     <div class="flex-row">
-                        <div class="input-group" style="flex: 1;">
-                            <label>M.I.</label>
-                            <input type="text" name="mi" maxlength="1">
-                        </div>
+                        <div class="input-group" style="flex: 1;"><label>M.I.</label><input type="text" name="mi" maxlength="1"></div>
                         <div class="input-group" style="flex: 1.5;">
                             <label>Suffix</label>
                             <select name="suffix">
-                                <option value="">None</option>
-                                <option value="Jr.">Jr.</option>
-                                <option value="Sr.">Sr.</option>
-                                <option value="II">II</option>
-                                <option value="III">III</option>
+                                <option value="">None</option><option value="Jr.">Jr.</option><option value="Sr.">Sr.</option><option value="II">II</option><option value="III">III</option>
                             </select>
                         </div>
-                        <div class="input-group" style="flex: 1;">
-                            <label>Age</label>
-                            <input type="number" name="age" min="5" max="99" required>
-                        </div>
+                        <div class="input-group" style="flex: 1;"><label>Age</label><input type="number" name="age" min="5" max="99" required></div>
                     </div>
-
-                    <div class="input-group">
-                        <label>Birthdate</label>
-                        <input type="date" name="birthdate" required>
-                        <p class="booking-note">* Required for logistics and group booking.</p>
-                    </div>
-
+                    <div class="input-group"><label>Birthdate</label><input type="date" name="birthdate" required></div>
                     <div class="flex-row">
-                        <div class="input-group" style="flex: 1;">
-                            <label>Contact Number</label>
-                            <input type="tel" name="mobile" placeholder="09XXXXXXXXX" required>
-                        </div>
-                        <div class="input-group" style="flex: 1;">
-                            <label>Email Address</label>
-                            <input type="email" name="email" required>
-                        </div>
+                        <div class="input-group" style="flex: 1;"><label>Contact Number</label><input type="tel" name="mobile" placeholder="09XXXXXXXXX" required></div>
+                        <div class="input-group" style="flex: 1;"><label>Email Address</label><input type="email" name="email" required></div>
                     </div>
-
-                    <div class="input-group">
-                        <label>Home Address</label>
-                        <input type="text" name="address" placeholder="Street, Brgy, City, Province" required>
-                    </div>
+                    <div class="input-group"><label>Home Address</label><input type="text" name="address" required></div>
                 </div>
 
                 <div class="form-section">
                     <div class="section-title">SECTION 2: INSTITUTION DETAILS</div>
-                    <div class="input-group">
-                        <label>Institution Name</label>
-                        <input type="text" name="institution" placeholder="School or Company Name" required>
-                    </div>
+                    <div class="input-group"><label>Institution Name</label><input type="text" name="institution" required></div>
                     <div class="input-group">
                         <label>Position</label>
                         <select name="position" required>
                             <option value="" disabled selected>Select Position</option>
-                            <option value="Student">Student</option>
-                            <option value="Teacher">Teacher</option>
-                            <option value="School admin">School Admin</option>
+                            <option value="Student">Student</option><option value="Teacher">Teacher</option><option value="School admin">School Admin</option>
                         </select>
                     </div>
                 </div>
@@ -147,7 +134,6 @@
                         <select id="dateSelect" name="schedule" required>
                             <option value="" disabled selected>Select Batch</option>
                             <option value="batch1">Batch 1: April 13 - April 17</option>
-                        
                         </select>
                     </div>
 
@@ -158,20 +144,16 @@
                         </select>
                     </div>
 
-                    <div class="input-group">
-                        <label>Step 3: Number of Days</label>
-                        <select name="days_avail" id="daysAvail" required>
-                            <option value="" disabled selected>Select duration...</option>
-                            <option value="1">1 Day (₱500)</option>
-                            <option value="2">2 Days (₱950)</option>
-                            <option value="3">3 Days (₱1,400)</option>
-                            <option value="4">4 Days (₱1,800)</option>
-                            <option value="5">5 Days - Full Batch (₱2,000)</option>
-                        </select>
+                    <div class="input-group" id="daySelectionWrapper" style="display: none;">
+                        <label>Step 3: What day(s) will you attend?</label>
+                        <div class="day-selector-grid" id="checkboxGrid">
+                            </div>
+                        <input type="hidden" name="attendance_day" id="finalDaysList">
+                        <input type="hidden" name="days_avail" id="finalDaysCount">
                     </div>
                 </div>
 
-                <div class="form-section">
+                <div class="form-section" id="paymentSection" style="display: none;">
                     <div class="section-title">SECTION 4: PAYMENT</div>
                     <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
                         <p style="font-weight: 600; font-size: 0.8rem; color: #64748b;">TOTAL AMOUNT TO PAY:</p>
@@ -189,26 +171,12 @@
                     </div>
 
                     <div id="paymentDetailsBox" style="display:none; background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px;">
-                        <div id="bankInfo" class="method-info">
-                            <p><strong>Bank:</strong> METROBANK</p>
-                            <p><strong>Account:</strong> iTECHNOLOGENT INC.</p>
-                            <p><strong>Number:</strong> 3 5133 5156 0470</p>
-                        </div>
-                        <div id="gcashInfo" class="method-info">
-                            <div class="qr-container"><img src="QRCODE.png" alt="GCash" class="qr-code-img"></div>
-                        </div>
-                        <div id="cashInfo" class="method-info">
-                            <p>Settle at registration booth on your first day.</p>
-                        </div>
+                        <div id="bankInfo" class="method-info"><p><strong>Bank:</strong> METROBANK</p><p><strong>Number:</strong> 3 5133 5156 0470</p></div>
+                        <div id="gcashInfo" class="method-info"><div class="qr-container"><img src="QRCODE.png" alt="GCash" class="qr-code-img"></div></div>
+                        <div id="cashInfo" class="method-info"><p>Settle at registration booth on your first day.</p></div>
                         <div id="onlinePaymentFields" style="display:none; margin-top: 15px;">
-                            <div class="input-group">
-                                <label>Reference Number</label>
-                                <input type="text" name="payment_ref" id="refInput">
-                            </div>
-                            <div class="input-group">
-                                <label>Upload Proof</label>
-                                <input type="file" id="fileInput" accept="image/*">
-                            </div>
+                            <div class="input-group"><label>Reference Number</label><input type="text" name="payment_ref"></div>
+                            <div class="input-group"><label>Upload Proof</label><input type="file" id="fileInput" accept="image/*"></div>
                         </div>
                     </div>
                 </div>
@@ -219,79 +187,118 @@
     </div>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxLSO4e8X0sZMe3Yc2hnQWri4LbBQlc-99SLcZK_x71NB4A_FIQPIwH-b9gHNpbirjw/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyTEk2LEe1AL0U6MY2dMVWXXwZ8qCmB5tBwcY7pjpohID-t3fX-QYoJvhTuEHrlzDK4/exec';
         const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dbd7v3irn/image/upload';
         const CLOUDINARY_PRESET = 'REGISTRATION';
 
-        // 1. DYNAMIC SCHEDULING & BATCH GUARD
-        window.addEventListener('load', () => {
-            const now = new Date().getTime();
-            
-            // Opening Dates (PH Time UTC+8)
-            const mainOpening = new Date('2026-03-23T12:00:00+08:00').getTime();
-            const b2Opening   = new Date('2026-04-30T12:00:00+08:00').getTime(); 
-            const b3Opening   = new Date('2026-04-30T12:00:00+08:00').getTime();
+        const workshopSyllabus = {
+            "Arduino": [
+                { day: "Monday", title: "Day 1: The Spark Of Creation", desc: "Basic & Light" },
+                { day: "Tuesday", title: "Day 2: Talking to the World", desc: "Display & Numbers" },
+                { day: "Wednesday", title: "Day 3: Sensing the environment", desc: "Nature & Distance" },
+                { day: "Thursday", title: "Day 4: Moving & Reacting", desc: "Motors & Mini-Projects" },
+                { day: "Friday", title: "Day 5: Enter the cloud", desc: "IOT & Showcase" }
+            ],
+            "mBot": [
+                { day: "Monday", title: "Day 1: Rise of the machines", desc: "Assembly & First Moves" },
+                { day: "Tuesday", title: "Day 2: Sensing the world", desc: "Navigation & Avoidance" },
+                { day: "Wednesday", title: "Day 3: Color, Sound, and AI", desc: "Advanced Sensing" },
+                { day: "Thursday", title: "Day 4: Data & Dancing", desc: "Gyros Complex Logic" },
+                { day: "Friday", title: "Day 5: The Smart City Challenge", desc: "Showcase" }
+            ],
+            "Default": [
+                { day: "Monday", title: "Day 1", desc: "Introductory Sessions" },
+                { day: "Tuesday", title: "Day 2", desc: "Exploration & Practice" },
+                { day: "Wednesday", title: "Day 3", desc: "Intermediate Applications" },
+                { day: "Thursday", title: "Day 4", desc: "Advanced Projects" },
+                { day: "Friday", title: "Day 5", desc: "Showcase & Finalization" }
+            ]
+        };
 
-            // Main Site Guard
-            if (now < mainOpening) {
-                document.getElementById('regContent').style.display = 'none';
-                document.getElementById('upcomingNotice').style.display = 'block';
-                return;
-            }
-
-            // Batch Options Visibility
-            const dateSelect = document.getElementById('dateSelect');
-            const b2Opt = dateSelect.querySelector('option[value="batch2"]');
-            const b3Opt = dateSelect.querySelector('option[value="batch3"]');
-
-            if (now < b2Opening) { b2Opt.style.display = 'none'; b2Opt.disabled = true; }
-            if (now < b3Opening) { b3Opt.style.display = 'none'; b3Opt.disabled = true; }
-        });
-
-        // 2. WORKSHOP TOPICS
         const topics = {
             'batch1': ["Build Your Own Smart World with Arduino UNO R4", "CyberDrive: Robotics Mastery with mBot2"],
             'batch2': ["Build Your Own Smart World with Arduino UNO R4", "CyberDrive: Robotics Mastery with mBot2", "Bring Ideas to Life with Bambu Lab"],
             'batch3': ["Build Your Own Smart World with Arduino UNO R4", "CyberDrive: Robotics Mastery with mBot2", "Master the Skies with Tello EDU Drone"]
         };
 
+        // Date selection -> Show Step 2
         document.getElementById('dateSelect').addEventListener('change', function() {
             const select = document.getElementById('workshopSelect');
             document.getElementById('workshopWrapper').style.display = 'block';
             select.innerHTML = '<option value="" disabled selected>Tap to select...</option>';
-            
-            if (topics[this.value]) {
-                topics[this.value].forEach(t => {
-                    let opt = document.createElement('option');
-                    opt.value = t; opt.textContent = t;
-                    select.appendChild(opt);
-                });
-            }
+            topics[this.value].forEach(t => {
+                let opt = document.createElement('option');
+                opt.value = t; opt.textContent = t;
+                select.appendChild(opt);
+            });
         });
 
-        // 3. PRICING & PAYMENT UI
-        document.getElementById('daysAvail').addEventListener('change', function() {
-            const pricing = { "1": 500, "2": 950, "3": 1400, "4": 1800, "5": 2000 };
-            document.getElementById('totalAmount').innerText = `₱${(pricing[this.value] || 0).toLocaleString()}`;
+        // Topic selection -> Build dynamic Step 3 checkboxes
+        document.getElementById('workshopSelect').addEventListener('change', function() {
+            const grid = document.getElementById('checkboxGrid');
+            const topic = this.value;
+            let syllabus = workshopSyllabus["Default"];
+
+            if (topic.includes("Arduino")) syllabus = workshopSyllabus["Arduino"];
+            if (topic.includes("mBot")) syllabus = workshopSyllabus["mBot"];
+
+            grid.innerHTML = syllabus.map((s, index) => `
+                <label class="day-option">
+                    <input type="checkbox" class="day-check" value="${s.day}">
+                    <div>
+                        <span class="day-title">${s.title}</span>
+                        <span class="day-desc">${s.desc}</span>
+                    </div>
+                </label>
+            `).join('') + `
+                <label class="day-option" style="color:#6366f1; border-top: 1px solid #ddd;">
+                    <input type="checkbox" id="allDaysToggle">
+                    <div><span class="day-title">Select All Days</span><span class="day-desc">Full Workshop Experience</span></div>
+                </label>
+            `;
+
+            document.getElementById('daySelectionWrapper').style.display = 'block';
+            document.getElementById('paymentSection').style.display = 'block';
+            attachCheckboxListeners();
         });
 
+        function attachCheckboxListeners() {
+            const dayChecks = document.querySelectorAll('.day-check');
+            const allToggle = document.getElementById('allDaysToggle');
+
+            const calculateTotal = () => {
+                const checkedCount = Array.from(dayChecks).filter(i => i.checked).length;
+                const pricing = { 0: 0, 1: 500, 2: 950, 3: 1400, 4: 1800, 5: 2000 };
+                document.getElementById('totalAmount').innerText = `₱${(pricing[checkedCount] || 0).toLocaleString()}`;
+                document.getElementById('finalDaysCount').value = checkedCount;
+                document.getElementById('finalDaysList').value = Array.from(dayChecks).filter(i => i.checked).map(i => i.value).join(', ');
+                allToggle.checked = (checkedCount === 5);
+            };
+
+            dayChecks.forEach(cb => cb.addEventListener('change', calculateTotal));
+            allToggle.addEventListener('change', function() {
+                dayChecks.forEach(cb => cb.checked = this.checked);
+                calculateTotal();
+            });
+        }
+
+        // Payment UI & Submission remain consistent with previous logic
         document.getElementById('paymentMethod').addEventListener('change', function() {
             document.getElementById('paymentDetailsBox').style.display = 'block';
             document.getElementById('bankInfo').style.display = this.value === 'Bank Transfer' ? 'block' : 'none';
             document.getElementById('gcashInfo').style.display = this.value === 'GCash' ? 'block' : 'none';
             document.getElementById('cashInfo').style.display = this.value === 'Cash' ? 'block' : 'none';
-            const isOnline = this.value === 'Bank Transfer' || this.value === 'GCash';
-            document.getElementById('onlinePaymentFields').style.display = isOnline ? 'block' : 'none';
+            document.getElementById('onlinePaymentFields').style.display = (this.value !== 'Cash') ? 'block' : 'none';
         });
 
-        // 4. SUBMISSION
         document.getElementById('regForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const overlay = document.getElementById('loadingOverlay');
-            overlay.style.display = 'flex';
-
+            if (document.getElementById('finalDaysCount').value == "0") {
+                alert("Please select at least one day to attend."); return;
+            }
+            document.getElementById('loadingOverlay').style.display = 'flex';
             try {
-                let imageUrl = "None/On-site";
+                let imageUrl = "None";
                 const fileInput = document.getElementById('fileInput');
                 if (fileInput.files.length > 0) {
                     const cloudData = new FormData();
@@ -300,32 +307,18 @@
                     const cloudRes = await fetch(CLOUDINARY_URL, { method: 'POST', body: cloudData });
                     imageUrl = (await cloudRes.json()).secure_url;
                 }
-
                 const formData = new FormData(e.target);
                 const dataObj = Object.fromEntries(formData);
-                dataObj['fullname'] = `${dataObj.firstname} ${dataObj.mi ? dataObj.mi + '. ' : ''}${dataObj.lastname} ${dataObj.suffix}`.trim();
                 dataObj['total_price'] = document.getElementById('totalAmount').innerText;
                 dataObj['attachment_url'] = imageUrl;
-
                 const response = await fetch(scriptURL, { method: 'POST', body: new URLSearchParams(dataObj) });
                 const result = await response.text();
-
                 if (result === "Success") {
                     document.getElementById('statusTitle').innerText = "Success!";
-                    document.getElementById('statusMsg').innerText = "Registration complete. Please check your email for confirmation.";
-                } else if (result === "DUPLICATE_EMAIL" || result === "DUPLICATE_NAME") {
-                    document.getElementById('statusTitle').innerText = "Already Registered";
-                    document.getElementById('statusMsg').innerText = "This record already exists in our database.";
-                } else {
-                    document.getElementById('statusTitle').innerText = "Notice";
-                    document.getElementById('statusMsg').innerText = result;
-                }
-            } catch (err) {
-                document.getElementById('statusTitle').innerText = "Error";
-                document.getElementById('statusMsg').innerText = "Connection failed. Please try again.";
-            } finally {
-                document.getElementById('closeBtn').style.display = 'block';
-            }
+                    document.getElementById('statusMsg').innerText = "Registration complete. Check your email.";
+                } else { document.getElementById('statusMsg').innerText = result; }
+            } catch (err) { document.getElementById('statusMsg').innerText = "Submission failed."; }
+            finally { document.getElementById('closeBtn').style.display = 'block'; }
         });
     </script>
 </body>
