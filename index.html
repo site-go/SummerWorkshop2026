@@ -187,7 +187,7 @@
     </div>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyTEk2LEe1AL0U6MY2dMVWXXwZ8qCmB5tBwcY7pjpohID-t3fX-QYoJvhTuEHrlzDK4/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwcdSAcRovPK2w0_yRUQYh8Snrgq4hLbWYWD6ZsERZMeH9c0BjaoINa5qsGWwaTBdpe/exec';
         const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dbd7v3irn/image/upload';
         const CLOUDINARY_PRESET = 'REGISTRATION';
 
@@ -315,7 +315,7 @@
                 const result = await response.text();
                 if (result === "Success") {
                     document.getElementById('statusTitle').innerText = "Success!";
-                    document.getElementById('statusMsg').innerText = "Registration complete. Check your email.";
+                    document.getElementById('statusMsg').innerText = "Registration complete.";
                 } else { document.getElementById('statusMsg').innerText = result; }
             } catch (err) { document.getElementById('statusMsg').innerText = "Submission failed."; }
             finally { document.getElementById('closeBtn').style.display = 'block'; }
