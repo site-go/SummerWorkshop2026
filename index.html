@@ -35,27 +35,13 @@
         .notice-card { display: none; padding: 30px; border-radius: 12px; margin-bottom: 20px; font-weight: 700; text-align: center; border: 2px solid; }
         #upcomingNotice { background: #e0e7ff; color: #3730a3; border-color: #6366f1; }
         
-        /* Checkbox Styling */
         .day-selector-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            margin-top: 10px;
+            display: flex; flex-direction: column; gap: 8px; background: #f8fafc;
+            padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0; margin-top: 10px;
         }
         .day-option {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            padding: 10px;
-            border-radius: 8px;
-            transition: 0.2s;
-            border: 1px solid transparent;
+            display: flex; align-items: center; gap: 12px; cursor: pointer;
+            font-size: 0.85rem; padding: 10px; border-radius: 8px; transition: 0.2s; border: 1px solid transparent;
         }
         .day-option:hover { background: #fff; border-color: #6366f1; }
         .day-option input { width: 20px; height: 20px; cursor: pointer; accent-color: #6366f1; }
@@ -133,7 +119,8 @@
                         <label>Step 1: Choose Batch Schedule</label>
                         <select id="dateSelect" name="schedule" required>
                             <option value="" disabled selected>Select Batch</option>
-                             <option value="batch1">Batch 2: April 20 - April 24</option>
+                            <option value="batch1">Batch 2: April 20 - April 24</option>
+                            <option value="batch2">Batch 3: May 04 - May 08</option>
                         </select>
                     </div>
 
@@ -146,8 +133,7 @@
 
                     <div class="input-group" id="daySelectionWrapper" style="display: none;">
                         <label>Step 3: What day(s) will you attend?</label>
-                        <div class="day-selector-grid" id="checkboxGrid">
-                            </div>
+                        <div class="day-selector-grid" id="checkboxGrid"></div>
                         <input type="hidden" name="attendance_day" id="finalDaysList">
                         <input type="hidden" name="days_avail" id="finalDaysCount">
                     </div>
@@ -221,19 +207,27 @@
             'batch3': ["Build Your Own Smart World with Arduino UNO R4", "CyberDrive: Robotics Mastery with mBot2", "Master the Skies with Tello EDU Drone"]
         };
 
-        // Date selection -> Show Step 2
+        // mBot Closure Date Logic
+        const today = new Date();
+        const startClose = new Date('2026-04-27');
+        const endClose = new Date('2026-05-20');
+        const isMBotClosed = (today >= startClose && today <= endClose);
+
         document.getElementById('dateSelect').addEventListener('change', function() {
             const select = document.getElementById('workshopSelect');
             document.getElementById('workshopWrapper').style.display = 'block';
             select.innerHTML = '<option value="" disabled selected>Tap to select...</option>';
+            
             topics[this.value].forEach(t => {
+                // Skip mBot if current date is within closure window
+                if (isMBotClosed && t.toLowerCase().includes("mbot")) return;
+
                 let opt = document.createElement('option');
                 opt.value = t; opt.textContent = t;
                 select.appendChild(opt);
             });
         });
 
-        // Topic selection -> Build dynamic Step 3 checkboxes
         document.getElementById('workshopSelect').addEventListener('change', function() {
             const grid = document.getElementById('checkboxGrid');
             const topic = this.value;
@@ -242,7 +236,7 @@
             if (topic.includes("Arduino")) syllabus = workshopSyllabus["Arduino"];
             if (topic.includes("mBot")) syllabus = workshopSyllabus["mBot"];
 
-            grid.innerHTML = syllabus.map((s, index) => `
+            grid.innerHTML = syllabus.map((s) => `
                 <label class="day-option">
                     <input type="checkbox" class="day-check" value="${s.day}">
                     <div>
@@ -282,7 +276,6 @@
             });
         }
 
-        // Payment UI & Submission remain consistent with previous logic
         document.getElementById('paymentMethod').addEventListener('change', function() {
             document.getElementById('paymentDetailsBox').style.display = 'block';
             document.getElementById('bankInfo').style.display = this.value === 'Bank Transfer' ? 'block' : 'none';
